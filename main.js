@@ -1,4 +1,4 @@
-const peeps = [
+let peeps = [
     {
     title: "Samurai",
     name: "Tomoe Gozen",
@@ -46,11 +46,11 @@ function cardBuilder() {
         counterString = ''+counter;
         counter++;
         cardString += `<div id='${counterString}'>`
-        cardString +=   `<h3 class='title'>${peeps[i].title}</h3>`
-        cardString +=   `<p class='name'>${peeps[i].name}</p>`
-        cardString +=   `<p class='bio'>${peeps[i].bio}</p>`
-        cardString +=   `<img href=${peeps[i].image} class='image'>`
-        cardString +=   `<p class='lifespan'>${peeps[i].lifespan.birth} - ${peeps[i].lifespan.death}</p>`
+        cardString +=   `<h3 id='title${i}' class='title'>${peeps[i].title}</h3>`
+        cardString +=   `<p id='name${i}' class='name'>${peeps[i].name}</p>`
+        cardString +=   `<p id='bio${i}' class='bio'>${peeps[i].bio}</p>`
+        cardString +=   `<img id='image${i}' href=${peeps[i].image} class='image'>`
+        cardString +=   `<p id='lifespan${i}' class='lifespan'>${peeps[i].lifespan.birth} - ${peeps[i].lifespan.death}</p>`
         cardString += `</div>`;      
     }
     addToDom('mainDiv', cardString);
@@ -84,16 +84,24 @@ function clickedElement() {
 }
 
 function updateElement() {
-    document.getElementById('mainDiv').addEventListener('click', function() {
+    document.getElementById('mainDiv').addEventListener('click', function(event) {
         let element = event.target;
+        let idIndex = element.id.replace(element.className, '');
         if(element.parentNode.classList.contains('even')) {
-           
+           document.getElementById('input').addEventListener('keyup', function() {
+               peeps[idIndex][element.className] = document.getElementById('input').value;
+               element.innerHTML = peeps[idIndex][element.className];
+           })
     }
         else if(element.parentNode.classList.contains('odd')) {
-            
+            document.getElementById('input').addEventListener('keyup', function() {
+                peeps[idIndex][element.className] = document.getElementById('input').value;
+                element.innerHTML = peeps[idIndex][element.className];
+            })
     }
     })
 }
 
 cardBuilder();
 clickedElement();
+updateElement();
