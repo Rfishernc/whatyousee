@@ -111,6 +111,14 @@ function updateElement() {
     })
 }
 
+function pressedEnter() {
+    document.getElementById('form').addEventListener('submit', function() {
+        event.preventDefault();
+        document.getElementById('input').value = '';
+    })
+}
+
 cardBuilder();
 clickedElement();
 updateElement();
+pressedEnter();
