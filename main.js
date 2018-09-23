@@ -31,6 +31,8 @@ let peeps = [
 
 let counter = 0;
 let counterString = '';
+let element;
+let val;
 
 function writeToDom(div, string) {
     document.getElementById(div).innerHTML = string;
@@ -69,9 +71,14 @@ function classAssigner() {
     }
 }
 
+function getValue() {
+    val = document.getElementById('input').value;
+    return val;
+}
+
 function clickedElement() {
     document.getElementById('mainDiv').addEventListener('click', function() {
-        let element = event.target;
+        element = event.target;
         if(element.parentNode.classList.contains('even')) {
             element.style.border = '1px black dotted';
             document.getElementById('input').focus();
@@ -84,21 +91,23 @@ function clickedElement() {
 }
 
 function updateElement() {
-    document.getElementById('mainDiv').addEventListener('click', function(event) {
-        let element = event.target;
+    document.getElementById('mainDiv').addEventListener('click', function() {
+        element = event.target;
         let idIndex = element.id.replace(element.className, '');
         if(element.parentNode.classList.contains('even')) {
-           document.getElementById('input').addEventListener('keyup', function() {
-               peeps[idIndex][element.className] = document.getElementById('input').value;
-               element.innerHTML = peeps[idIndex][element.className];
-           })
-    }
-        else if(element.parentNode.classList.contains('odd')) {
             document.getElementById('input').addEventListener('keyup', function() {
-                peeps[idIndex][element.className] = document.getElementById('input').value;
+                getValue();
+                peeps[idIndex][element.className] = val;
                 element.innerHTML = peeps[idIndex][element.className];
             })
-    }
+        }
+        else if(element.parentNode.classList.contains('odd')) {
+            document.getElementById('input').addEventListener('keyup', function() {
+                getValue();
+                peeps[idIndex][element.className] = val;
+                element.innerHTML = peeps[idIndex][element.className];
+           })
+        }
     })
 }
 
